@@ -1,0 +1,40 @@
+{
+  "contacts": [
+    {
+      "id": "1",
+      "name": "Arbaz Khan",
+      "About": "Sleeping",
+      "profilePic": null
+    },
+    {
+      "id": "2",
+      "name": "Zafar Abbas",
+      "About": "Sleeping",
+      "profilePic": null
+    },
+    {
+      "id": "3",
+      "name": "Zakaur Rahman",
+      "About": "Sleeping",
+      "profilePic": "https://zakaur-rahman.github.io/images/ad.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Kaif Imam",
+      "About": "Sleeping",
+      "profilePic": null
+    },
+    {
+      "id": "5",
+      "name": "Aarif Hasan",
+      "About": "Sleeping",
+      "profilePic": null
+    },
+    {
+      "id": "6",
+      "name": "Ghazi Sultan",
+      "About": "Sleeping",
+      "profilePic": "https://avatars.githubusercontent.com/u/12134548?v=4"
+    }
+  ]
+}
