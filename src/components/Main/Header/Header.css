@@ -49,6 +49,25 @@
   cursor: pointer;
 }
 
+.profile-upload {
+  width:50px;
+  height:50px;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  margin:10px auto;
+  padding:0 auto;
+  border-radius:50%;
+  background-color:#8E8B8B;
+  cursor: pointer;
+}
+
+
+
+.profile-upload input {
+  display: none;
+}
+
 .profile-content {
   width: 150px;
   height: 200px;
@@ -75,6 +94,24 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   /* left: -50px; */
   right: -60px;
+}
+
+.profile-details-pic {
+  display: flex;
+  width: 55px;
+  height: 55px;
+  margin: 0px auto;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.profile-upload-pic {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  margin: 10px auto;
+  border-radius: 50%;
+  z-index: 1050;
 }
 
 

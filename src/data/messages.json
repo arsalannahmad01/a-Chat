@@ -1,0 +1,46 @@
+{
+    "messages":[
+        {
+            "senderId":"641ee508a41790e1352b1275",
+            "reciever":"64208b4afc76b980d138ec30",
+            "type":"text",
+            "message":"Hello"
+        },
+        {
+            "senderId":"64208b4afc76b980d138ec30",
+            "reciever":"641ee508a41790e1352b1275",
+            "type":"text",
+            "message":"Hello"
+        },
+        {
+            "senderId":"641ee508a41790e1352b1275",
+            "reciever":"64208b4afc76b980d138ec30",
+            "type":"text",
+            "message":"How are you?"
+        },
+        {
+            "senderId":"64208b4afc76b980d138ec30",
+            "reciever":"641ee508a41790e1352b1275",
+            "type":"text",
+            "message":"I am fine."
+        },
+        {
+            "senderId":"64208b4afc76b980d138ec30",
+            "reciever":"641ee508a41790e1352b1275",
+            "type":"text",
+            "message":"What about you?"
+        },
+        {
+            "senderId":"641ee508a41790e1352b1275",
+            "reciever":"64208b4afc76b980d138ec30",
+            "type":"image",
+            "message":"https://images.pexels.com/photos/14656123/pexels-photo-14656123.jpeg"
+        },
+        {
+            "senderId":"64208b4afc76b980d138ec30",
+            "reciever":"641ee508a41790e1352b1275",
+            "type":"video",
+            "message":"https://www.youtube.com/watch?v=UCOQkJZfig4"
+        }
+    ]
+}

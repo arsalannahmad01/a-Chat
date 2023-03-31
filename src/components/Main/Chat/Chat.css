@@ -21,6 +21,7 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
   /* border-right: 1px solid #c2c1c1; */
 }
 
@@ -72,8 +73,122 @@ body {
 }
 
 .singleContact img {
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
 }
+
+.noContactSelected {
+  height: 100%;
+  display: flex;
+}
+
+.add-contact {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: #bbb9b9;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  margin-right: 20px;
+  bottom: 20px;
+  /* margin-top: 770px; */
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.add-contact img {
+  margin: auto;
+  z-index: 1050;
+}
+
+
+.add-dialouge-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 30%;
+  height: 25%;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 3px 30px 0 rgba(0, 0, 0, 0.3);
+  align-self: center;
+  margin-left: 100px;
+}
+
+.add-contact-email {
+  width: 100%;
+  flex: 1;
+  margin: auto auto;
+}
+
+.contact-email {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid;
+  margin:auto;
+  margin-top: 45px;
+  padding: 10px;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.found-contact {
+  width: 75%;
+  margin:auto;
+  margin-top: 45px;
+  padding: 10px;
+}
+
+.found-contact-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  gap: 20px;
+}
+
+.found-contact-details img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.contact-email input {
+  width: inherit;
+  border: none;
+  outline: none;
+  font-size: 18px;
+}
+
+.add-cancel-contact {
+  height: 30%;
+}
+
+.add-cancel-contact-inner {
+  width:fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.add-cancel-contact button {
+  width: 80px;
+  height: 40px;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 1px 1px 2px 1px #888888;
+}
+
+.add-cancel-contact button:hover {
+  background-color: #b4b0b0;
+}
+
 
 .chat-box {
   width: 70%;
@@ -110,6 +225,8 @@ body {
 }
 
 .chat-header-profile img {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-left: 10px;
 }
@@ -155,6 +272,8 @@ body {
 
 .chat-list-box {
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .chat-input {
@@ -198,4 +317,82 @@ body {
 
 .chat-sent img {
   cursor: pointer;
+}
+
+.sent {
+  padding: 5px;
+  display: flex;
+}
+
+.sent-msg {
+  margin-left: auto;
+  display: flex;
+  padding: 0 25px;
+}
+
+.sent-msg img {
+  z-index: 1050;
+  margin-top: -1px;
+}
+
+.sent-msg-msg {
+  display: inline-block;
+  max-width: 500px;
+  padding: 8px 20px;
+  background-color: #fff;
+  padding-left: 9px;
+  text-align: left;
+  z-index: 1050;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 6px 6px 0 rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.sent-msg-msg img {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.recieved {
+  padding: 5px;
+  display: flex;
+}
+
+.recieved-msg {
+  margin-right: auto;
+  display: flex;
+  padding: 0 25px;
+}
+
+.recieved-msg img {
+  z-index: 1050;
+  margin-top: -1px;
+}
+
+
+.recieved-msg-msg {
+  display: inline-block;
+  max-width: 500px;
+  padding: 8px 20px;
+  background-color: #fff;
+  padding-left: 9px;
+  text-align: left;
+  z-index: 1050;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 6px 6px 0 rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.recieved-msg-msg img {
+  max-width: 500px;
+  max-height: 300px;
+}
+
+.react-player {
+  max-width: 500px;
+  max-height: 300px;
 }
