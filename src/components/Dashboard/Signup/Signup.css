@@ -3,15 +3,15 @@
 }
 
 .register-body-left {
-    width: 50%;
+    width: 60%;
 }
 
 .register-body-right {
-    width: 50%;
+    width: 40%;
 }
 
 .signup-form {
-    width: 50%;
+    width: 60%;
     /* height: 500px; */
     background-color: #fff;
     margin: 100px auto;
@@ -66,3 +66,116 @@
 .signup-form-submit:hover {
     background-color: #bebbbb;
 }
+
+.spinner-btn {
+    width: 80%;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 20px auto;
+    background-color: #e0e0e0;
+}
+
+
+@media (max-width: 1450px) {
+    .register-body-left {
+        width: 60%;
+    }
+
+    .register-body-right {
+        width: 40%;
+    }
+
+    .signup-form {
+        width: 80%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .register-body-left {
+        width: 50%;
+    }
+
+    .register-body-right {
+        width: 50%;
+    }
+
+    .signup-form {
+        width: 70%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .register-body-left {
+        width: 40%;
+    }
+
+    .register-body-right {
+        width: 60%;
+    }
+
+    .signup-form {
+        width: 80%;
+    }
+}
+
+@media (max-width: 800px) {
+    .register-body-left {
+        width: 0;
+    }
+
+    .register-body-right {
+        width: 100%;
+    }
+
+    .signup-form {
+        width: 60%;
+        margin:60px auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .register-body-left {
+        width: 0;
+    }
+
+    .register-body-right {
+        width: 100%;
+    }
+
+    .signup-form {
+        width: 80%;
+        margin:60px auto;
+    }
+}
+
+@media (max-width: 500px) {
+    .register-body-left {
+        width: 0;
+    }
+
+    .register-body-right {
+        width: 100%;
+    }
+
+    .signup-form {
+        width: 95%;
+        margin:100px auto;
+    }
+}
+
+
+/* @media (max-width: 1250px) {
+    .register-body-left {
+        width: 50;
+    }
+
+    .register-body-right {
+        width: 50%;
+    }
+
+    .signup-form {
+        width: 80%;
+    }
+} */

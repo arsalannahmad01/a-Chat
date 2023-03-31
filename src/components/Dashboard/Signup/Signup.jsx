@@ -27,7 +27,7 @@ const Signup = () => {
   }
 
   const handleRegister = async() => {
-    const res = await axios.post(`http://localhost:8088/api/v1/user/signup`, {username:name, email:email, password:password})
+    const res = await axios.post(`https://achat-ra84.onrender.com/api/v1/user/signup`, {username:name, email:email, password:password})
     localStorage.setItem('user', JSON.stringify(res.data.user))
     localStorage.setItem('token', JSON.stringify(res.data.token))
     navigate('/chat')

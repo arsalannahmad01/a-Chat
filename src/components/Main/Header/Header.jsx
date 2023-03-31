@@ -53,7 +53,7 @@ const Main = () => {
   }
 
   const handleProfilePic = async () => {
-    await axios.put(`http://localhost:8088/api/v1/authuser/update/profile-pic/${user._id}`, {profilePic:profile}, {
+    await axios.put(`https://achat-ra84.onrender.com/api/v1/authuser/update/profile-pic/${user._id}`, {profilePic:profile}, {
       headers:{
         Authorization:`Bearer ${token}`
       }

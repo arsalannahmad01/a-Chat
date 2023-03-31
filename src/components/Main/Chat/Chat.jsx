@@ -13,6 +13,7 @@ import sentIcon from "../../../public/icons/sent-msg.png";
 import recievedIcon from "../../../public/icons/recieved-msg.png";
 import addIcon from "../../../public/icons/add-icon.png";
 import emailIcon from "../../../public/icons/email-icon.png";
+import Spinner from "../../../public/icons/spinner.gif";
 import msgData from "../../../data/messages.json";
 import { storage } from "../../../actions/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -20,17 +21,19 @@ import { v4 } from "uuid";
 import { io } from "socket.io-client";
 import Header from "../Header/Header";
 
-const socket = io("http://localhost:8088");
+const socket = io("https://achat-ra84.onrender.com");
 
 const Chat = () => {
   const token = JSON.parse(localStorage.getItem("token"));
   const user = JSON.parse(localStorage.getItem("user"));
   const [isOption, setIsOption] = useState(false);
   const [contacts, setContacts] = useState([]);
+  const [contactsStatus, setContactsStatus] = useState(false);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [searchKey, setSearchKey] = useState("");
   const [selectedContact, setSelectedContact] = useState("");
   const [allMessages, setAllMessages] = useState([]);
+  const [messagesStatus, setMessagesStatus] = useState(false);
   const [message, setMessage] = useState();
   const [addContact, setAddContact] = useState(false);
   const [findEmail, setFindEmail] = useState(null);
@@ -52,8 +55,9 @@ const Chat = () => {
   }, [socket]);
 
   const getAllContact = async () => {
+    setContactsStatus(true);
     const contactData = await axios.get(
-      `http://localhost:8088/api/v1/authuser/get/saved-contacts/${user._id}`,
+      `https://achat-ra84.onrender.com/api/v1/authuser/get/saved-contacts/${user._id}`,
       {
         headers: {
           authorization: `Bearer ${token}`,
@@ -61,6 +65,7 @@ const Chat = () => {
       }
     );
 
+    setContactsStatus(false);
     setContacts(contactData.data.savedContacts);
     setFilteredContacts(contactData.data.savedContacts);
   };
@@ -98,16 +103,20 @@ const Chat = () => {
     setFilteredContacts(filteredData);
   }, [searchKey]);
 
-  const getSelectedChatMessages = async(contact) => {
+  const getSelectedChatMessages = async (contact) => {
+    setMessagesStatus(true);
     setMessage("");
     setSelectedContact(contact);
     let tempMessages = [];
-    const data = await axios.get(`http://localhost:8088/api/v1/message/get/${user._id}/${contact._id}`, {
-      headers:{
-        authorization: `Bearer ${token}`
+    const data = await axios.get(
+      `https://achat-ra84.onrender.com/api/v1/message/get/${user._id}/${contact._id}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       }
-    })
-    console.log(data.data);
+    );
+    setMessagesStatus(false);
     setAllMessages(data.data);
   };
 
@@ -129,16 +138,20 @@ const Chat = () => {
     setMessage("");
     socket.emit("send-msg", tempMsg);
 
-    await axios.post("http://localhost:8088/api/v1/message/send", tempMsg, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
+    await axios.post(
+      "https://achat-ra84.onrender.com/api/v1/message/send",
+      tempMsg,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
   };
 
   const findContact = async () => {
     const foundContact = await axios.get(
-      `http://localhost:8088/api/v1/authuser/get/user-by-email/${findEmail}`,
+      `https://achat-ra84.onrender.com/api/v1/authuser/get/user-by-email/${findEmail}`,
       {
         headers: {
           authorization: `Bearer ${token}`,
@@ -161,7 +174,7 @@ const Chat = () => {
 
   const handleAddContact = async () => {
     await axios.put(
-      `http://localhost:8088/api/v1/authuser/add/contact/${user._id}`,
+      `https://achat-ra84.onrender.com/api/v1/authuser/add/contact/${user._id}`,
       { contactId: foundContact._id },
       {
         headers: {
@@ -170,7 +183,7 @@ const Chat = () => {
       }
     );
 
-    setContacts([...contacts, foundContact]);
+    setContacts((contacts) => [...contacts, foundContact]);
     setAddContact(false);
     setFoundContact(null);
     setAddContactButton("check");
@@ -191,22 +204,31 @@ const Chat = () => {
               />
             </div>
           </div>
-          <div className="contact-list">
-            {filteredContacts &&
-              filteredContacts.map((contact, index) => (
-                <div
-                  className="singleContact"
-                  value={contact}
-                  onClick={() => getSelectedChatMessages(contact)}
-                >
-                  <img
-                    src={contact.profilePic ? contact.profilePic : DProfile}
-                    alt={contact.username}
-                  />
-                  {contact.username}
-                </div>
-              ))}
-          </div>
+          {contactsStatus ? (
+            <img
+              src={Spinner}
+              alt="spinner"
+              width={70}
+              style={{ margin: "0 auto" }}
+            />
+          ) : (
+            <div className="contact-list">
+              {filteredContacts &&
+                filteredContacts.map((contact, index) => (
+                  <div
+                    className="singleContact"
+                    value={contact}
+                    onClick={() => getSelectedChatMessages(contact)}
+                  >
+                    <img
+                      src={contact.profilePic ? contact.profilePic : DProfile}
+                      alt={contact.username}
+                    />
+                    {contact.username}
+                  </div>
+                ))}
+            </div>
+          )}
 
           <span className="add-contact" onClick={() => setAddContact(true)}>
             <img src={addIcon} alt="add" width={40} />
@@ -251,62 +273,72 @@ const Chat = () => {
                 ""
               )}
 
-              <div className="chat-list-box">
-                {allMessages &&
-                  allMessages.map((message, index) =>
-                    message.senderId === user._id ? (
-                      <div key={index} className="sent">
-                        <div className="sent-msg">
-                          {message.type === "text" ? (
-                            <div className="sent-msg-msg">
-                              {message.message}
-                            </div>
-                          ) : message.type === "image" ? (
-                            <div className="sent-msg-msg">
-                              <img src={message.message} alt="img" />
-                            </div>
-                          ) : message.type === "video" ? (
-                            <div className="sent-msg-msg">
-                              <ReactPlayer
-                                className="react-player"
-                                url={message.message}
-                                controls
-                              />
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                          <img src={sentIcon} alt="" width={10} />
+              {messagesStatus ? (
+                <div className="spinner-box" >
+                  <img
+                  src={Spinner}
+                  alt="spinner"
+                  width={70}
+                />
+                </div>
+              ) : (
+                <div className="chat-list-box">
+                  {allMessages &&
+                    allMessages.map((message, index) =>
+                      message.senderId === user._id ? (
+                        <div key={index} className="sent">
+                          <div className="sent-msg">
+                            {message.type === "text" ? (
+                              <div className="sent-msg-msg">
+                                {message.message}
+                              </div>
+                            ) : message.type === "image" ? (
+                              <div className="sent-msg-msg">
+                                <img src={message.message} alt="img" />
+                              </div>
+                            ) : message.type === "video" ? (
+                              <div className="sent-msg-msg">
+                                <ReactPlayer
+                                  className="react-player"
+                                  url={message.message}
+                                  controls
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            <img src={sentIcon} alt="" width={10} />
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div key={index} className="recieved">
-                        <div className="recieved-msg">
-                          <img src={recievedIcon} alt="" width={10} />
-                          {message.type === "text" ? (
-                            <div className="recieved-msg-msg">
-                              {message.message}
-                            </div>
-                          ) : message.type === "image" ? (
-                            <div className="recieved-msg-msg">
-                              <img src={message.message} alt="img" />
-                            </div>
-                          ) : message.type === "video" ? (
-                            <div className="recieved-msg-msg">
-                              <ReactPlayer
-                                className="react-player"
-                                url={message.message}
-                                controls
-                              />
-                            </div>
-                          ) : (
-                            ""
-                          )}
+                      ) : (
+                        <div key={index} className="recieved">
+                          <div className="recieved-msg">
+                            <img src={recievedIcon} alt="" width={10} />
+                            {message.type === "text" ? (
+                              <div className="recieved-msg-msg">
+                                {message.message}
+                              </div>
+                            ) : message.type === "image" ? (
+                              <div className="recieved-msg-msg">
+                                <img src={message.message} alt="img" />
+                              </div>
+                            ) : message.type === "video" ? (
+                              <div className="recieved-msg-msg">
+                                <ReactPlayer
+                                  className="react-player"
+                                  url={message.message}
+                                  controls
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )
-                  )}
-              </div>
+                      )
+                    )}
+                </div>
+              )}
 
               <div className="chat-input">
                 <label className="file-input">

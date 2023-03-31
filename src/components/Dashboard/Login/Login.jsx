@@ -8,23 +8,33 @@ import userIcon from "../../../public/icons/signup-user.png";
 import emailIcon from "../../../public/icons/email-icon.png";
 import passKeyIcon from "../../../public/icons/password-key.png";
 import eyeIcon from "../../../public/icons/eye-icon.png";
+import Spinner from "../../../public/icons/spinner.gif";
 
 const Login = () => {
   const navigate = useNavigate();
   const [isVisible, setIsvisible] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [loginSpiner, setLoginSpinner] = useState(false);
 
   const handleLogin = async () => {
-    const res = await axios.post(`http://localhost:8088/api/v1/user/login`, {
-      email: email,
-      password: password,
-    });
+    setLoginSpinner(true);
+    const res = await axios.post(
+      `https://achat-ra84.onrender.com/api/v1/user/login`,
+      {
+        email: email,
+        password: password,
+      }
+    );
 
-    if (res.data) {
+    if (res.data.user && res.data.token) {
+      setLoginSpinner(false);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("token", JSON.stringify(res.data.token));
       navigate("/chat");
+    } else {
+      setLoginSpinner(false);
+      alert(res.data);
     }
   };
 
@@ -70,9 +80,15 @@ const Login = () => {
               />
             </label>
 
-            <button className="signup-form-submit" onClick={handleLogin}>
-              Login
-            </button>
+            {loginSpiner ? (
+              <button className="spinner-btn">
+                <img src={Spinner} alt="login" width={45} />
+              </button>
+            ) : (
+              <button className="signup-form-submit" onClick={handleLogin}>
+                Login
+              </button>
+            )}
 
             <p>
               Need an account?{" "}
