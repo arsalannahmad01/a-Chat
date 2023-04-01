@@ -13,8 +13,6 @@ import sentIcon from "../../../public/icons/sent-msg.png";
 import recievedIcon from "../../../public/icons/recieved-msg.png";
 import addIcon from "../../../public/icons/add-icon.png";
 import emailIcon from "../../../public/icons/email-icon.png";
-import UpArrow from "../../../public/icons/up-arrow.png";
-import downArrow from "../../../public/icons/down-arrow.png";
 import Spinner from "../../../public/icons/spinner.gif";
 import msgData from "../../../data/messages.json";
 import { storage } from "../../../actions/firebase";
@@ -25,11 +23,9 @@ import Header from "../Header/Header";
 
 const socket = io("https://achat-ra84.onrender.com");
 
-const Chat = () => {
+const ChatM = () => {
   const token = JSON.parse(localStorage.getItem("token"));
   const user = JSON.parse(localStorage.getItem("user"));
-  const [arrowUp, setArrowUp] = useState(true);
-  const [windowWidth, setWindowWidth] = useState();
   const [isOption, setIsOption] = useState(false);
   const [contacts, setContacts] = useState([]);
   const [contactsStatus, setContactsStatus] = useState(false);
@@ -126,7 +122,7 @@ const Chat = () => {
 
   const closeChat = () => {
     setIsOption(false);
-    setSelectedContact("");
+    setSelectedContact();
     setAllMessages([]);
   };
 
@@ -193,33 +189,21 @@ const Chat = () => {
     setAddContactButton("check");
   };
 
-  const handleContactShow = () => {
-    arrowUp ? setArrowUp(false) : setArrowUp(true);
-  };
-
-  console.log(arrowUp);
-
   return (
     <>
       <Header />
       <div className="main-chat">
         <div className="contacts">
-          <button
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-              height: "61px",
-              borderBottom: "1px solid #f1f1f1",
-              cursor: "pointer",
-            }}
-            onClick={handleContactShow}
-          >
-            {arrowUp ? (
-              <img src={UpArrow} alt="up" width={20} />
-            ) : (
-              <img src={downArrow} alt="up" width={20} />
-            )}
-          </button>
+          <div className="contact-search">
+            <div className="search">
+              <img src={searchIcon} alt="Search" width={20} />
+              <input
+                type="text"
+                placeholder="Search"
+                onChange={(e) => setSearchKey(e.target.value)}
+              />
+            </div>
+          </div>
           {contactsStatus ? (
             <img
               src={Spinner}
@@ -228,47 +212,27 @@ const Chat = () => {
               style={{ margin: "0 auto" }}
             />
           ) : (
-            <>
-              {arrowUp ? (
-                <>
-              <div className="contact-search">
-                <div className="search">
-                  <img src={searchIcon} alt="Search" width={20} />
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    onChange={(e) => setSearchKey(e.target.value)}
-                  />
-                </div>
-              </div>
-                <div className="contact-list">
-                  {filteredContacts &&
-                    filteredContacts.map((contact, index) => (
-                      <div
-                        className="singleContact"
-                        value={contact}
-                        onClick={() => getSelectedChatMessages(contact)}
-                      >
-                        <img
-                          src={
-                            contact.profilePic ? contact.profilePic : DProfile
-                          }
-                          alt={contact.username}
-                        />
-                        {contact.username}
-                      </div>
-                    ))}
-                </div>
-                </>
-              ) : (
-                ""
-              )}
-            </>
+            <div className="contact-list">
+              {filteredContacts &&
+                filteredContacts.map((contact, index) => (
+                  <div
+                    className="singleContact"
+                    value={contact}
+                    onClick={() => getSelectedChatMessages(contact)}
+                  >
+                    <img
+                      src={contact.profilePic ? contact.profilePic : DProfile}
+                      alt={contact.username}
+                    />
+                    {contact.username}
+                  </div>
+                ))}
+            </div>
           )}
 
-          {arrowUp ? <span className="add-contact" onClick={() => setAddContact(true)}>
+          <span className="add-contact" onClick={() => setAddContact(true)}>
             <img src={addIcon} alt="add" width={40} />
-          </span>:""}
+          </span>
         </div>
         <div className="chat-box">
           {selectedContact ? (
@@ -310,8 +274,12 @@ const Chat = () => {
               )}
 
               {messagesStatus ? (
-                <div className="spinner-box">
-                  <img src={Spinner} alt="spinner" width={70} />
+                <div className="spinner-box" >
+                  <img
+                  src={Spinner}
+                  alt="spinner"
+                  width={70}
+                />
                 </div>
               ) : (
                 <div className="chat-list-box">
@@ -456,4 +424,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default ChatM;
